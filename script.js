@@ -1,8 +1,9 @@
 $(document).ready(() => {
     // Function to fetch and display notes
+    const baseURL = "https://notes-backend-sx7i.onrender.com";
     const fetchNotes = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/notes');
+            const response = await fetch(`${baseURL}/api/notes`);
             if (!response.ok) {
                 throw new Error('Failed to fetch notes');
             }
@@ -56,7 +57,7 @@ $(document).ready(() => {
     // Event listener for Save Note button
     $('#saveNoteBtn').click(async () => {
         const action = $('#saveNoteBtn').data('action');
-        const url = action === 'add' ? 'http://localhost:5000/api/notes' : `http://localhost:5000/api/notes/${$('#saveNoteBtn').data('id')}`;
+        const url = action === 'add' ? `${baseURL}/api/notes` : `${baseURL}/api/notes/${$('#saveNoteBtn').data('id')}`;
         const method = action === 'add' ? 'POST' : 'PUT';
         const data = {
             title: $('#noteTitle').val(),
@@ -86,7 +87,7 @@ $(document).ready(() => {
     const editNote = async (event) => {
         const noteId = $(event.target).data('id');
         try {
-            const response = await fetch(`http://localhost:5000/api/notes/${noteId}`);
+            const response = await fetch(`${baseURL}/api/notes/${noteId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch note');
             }
@@ -120,7 +121,7 @@ $(document).ready(() => {
     $('#confirmDeleteBtn').click(async () => {
         const noteId = $('#confirmDeleteBtn').data('id');
         try {
-            const response = await fetch(`http://localhost:5000/api/notes/${noteId}`, {
+            const response = await fetch(`${baseURL}/api/notes/${noteId}`, {
                 method: 'DELETE'
             });
             if (!response.ok) {
